@@ -236,7 +236,7 @@
         if(getParam('backFromPre')) {
             data.back_from_pre = 1;
         }
-        $.ajax({
+        jQuery.ajax({
             contentType: "application/json",
             xhrFields: {
                 withCredentials: true
@@ -255,7 +255,7 @@
         });
     }
     function updateName(name, phone) {
-        $.ajax({
+        jQuery.ajax({
             contentType: "application/json",
             url: _opt.pre_url + '?id=' + sentPhoneList[phone],
             method: 'PUT',
@@ -265,7 +265,7 @@
         });
     }
     function updateSubmit(phone) {
-        $.ajax({
+        jQuery.ajax({
             contentType: "application/json",
             url: _opt.pre_url + '?id=' + sentPhoneList[phone],
             method: 'PUT',
@@ -306,9 +306,9 @@
     function valWidget(){
         $a = getParam('widget');
         $a = $a.split(",");
-        $.each( $a, function( key, value ) {
+        jQuery.each( $a, function( key, value ) {
             //console.log(value);
-            if($.trim(value) == 'proof'){
+            if(jQuery.trim(value) == 'proof'){
                 var currentNumber = Math.floor(Math.random() * (72 - 20 + 1)) + 20;
                 var places = ['Hà Nội', 'Nghệ An', 'Hồ Chí Minh', 'Vũng Tàu', 'Nha Trang', 'Cà Mau', 'Hà Giang', 'Hải Phòng', 'Quảng Ninh', 'Thanh Hóa', 'Ninh Bình'];
                 var proofWrapper = jQuery('<div id="scpf" style="transition:all 2s ease 0s;position:fixed;z-index:99999;border-radius:30px;bottom:5px;left:20px;width:300px;height:65px;background-color:white"></div>');
@@ -361,7 +361,7 @@
                 proof();
             }
 
-            if($.trim(value) == 'popup'){
+            if(jQuery.trim(value) == 'popup'){
                 setTimeout(function () {
                     jQuery(_opt.popup_wrap).fadeIn(600);
                 }, _opt.popup_time);
