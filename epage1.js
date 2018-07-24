@@ -70,7 +70,7 @@
     }
     
     function setInput($name, $value){
-        $('input[name='+$name+']').val($value);
+        jQuery('input[name='+$name+']').val($value);
     }
     function setOpt(name, value) {
         _opt[name] = value;
@@ -95,25 +95,25 @@
     function valPopup() {
         if(_opt.popup){
             setTimeout(function () {
-                $(_opt.popup_wrap).fadeIn(600);
+                jQuery(_opt.popup_wrap).fadeIn(600);
             }, _opt.popup_time);
 
-            $('#closepopup').click(function (e) {
+            jQuery('#closepopup').click(function (e) {
                 e.preventDefault();
-                $(_opt.popup_wrap).fadeOut(200);
+                jQuery(_opt.popup_wrap).fadeOut(200);
             });
 
-            $('html').click(function (e) {
+            jQuery('html').click(function (e) {
                 var a = e.target;
-                if ($(a).parents(_opt.popup_wrap).length === 0) {
-                    $(_opt.popup_wrap).fadeOut(600);
+                if (jQuery(a).parents(_opt.popup_wrap).length === 0) {
+                    jQuery(_opt.popup_wrap).fadeOut(600);
                 }
             });    
         }
     }
     function valPhone() {
-        $('input[name='+_opt.name_phone+']').attr('type','tel');
-        $('input[name='+_opt.name_phone+']').on('keydown', function(event) {
+        jQuery('input[name='+_opt.name_phone+']').attr('type','tel');
+        jQuery('input[name='+_opt.name_phone+']').on('keydown', function(event) {
             if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 187 ||
                 (event.keyCode == 65 && event.ctrlKey === true) ||
                 (event.keyCode >= 35 && event.keyCode <= 39)) {return;}
@@ -121,7 +121,7 @@
                 if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {event.preventDefault();}
             }
         });
-        $('input[name='+_opt.name_phone+']').on('touchend, click', function () {
+        jQuery('input[name='+_opt.name_phone+']').on('touchend, click', function () {
             if (_opt.hint_phone != '') {
                 show_form_hint(this, _opt.hint_phone);
                 return false;
@@ -129,7 +129,7 @@
         });
     }
     function valName() {
-        $('input[name='+_opt.name_name+']').on('touchend, click', function () {
+        jQuery('input[name='+_opt.name_name+']').on('touchend, click', function () {
             if (_opt.hint_name != '') {
                 show_form_hint(this, _opt.hint_name);
                 return false;
@@ -137,9 +137,9 @@
         });
     }
     function checkForm(target) {
-        $('.'+_opt.error_class).remove();
+        jQuery('.'+_opt.error_class).remove();
 
-        var form = $(target).parents('form').first();
+        var form = jQuery(target).parents('form').first();
         var formInputs = {
             fio: form.find('[name="'+_opt.name_name+'"]'),
             phone: form.find('[name="'+_opt.name_phone+'"]')
@@ -183,19 +183,19 @@
                 return false;
             }
         }
-        $('.'+_opt.submit_class).attr('disabled', 'disabled');
+        jQuery('.'+_opt.submit_class).attr('disabled', 'disabled');
         form.submit();  
     } 
     function show_form_hint(elem, msg) {
       if (typeof dataLayer !== 'undefined') {
-        var name = $(elem).attr('name');
+        var name = jQuery(elem).attr('name');
         dataLayer.push({ 'event': 'form-submit-' + name + '-error'});
       }
       
-      $('.'+_opt.error_class).remove();
-      $('<div class="'+_opt.error_class+'">' + msg + '</div>').appendTo('body').css({
-        'left': $(elem).offset().left,
-        'top': $(elem).offset().top - 30,
+      jQuery('.'+_opt.error_class).remove();
+      jQuery('<div class="'+_opt.error_class+'">' + msg + '</div>').appendTo('body').css({
+        'left': jQuery(elem).offset().left,
+        'top': jQuery(elem).offset().top - 30,
         'background-color':'#e74c3c',
         'border': '1px dashed black',
         'border-radius': '5px',
@@ -207,7 +207,7 @@
         'position': 'absolute',
         'z-index': '9999'
       });
-      $(elem).focus();
+      jQuery(elem).focus();
     };
 
     //pre
@@ -281,20 +281,20 @@
                 return false;
             }
 
-            $('input[name="'+_opt.name_phone+'"]').keyup(function () {
-                var phoneValue = parseInt($(this).val()).toString(); // Bỏ số 0 ở đầu
+            jQuery('input[name="'+_opt.name_phone+'"]').keyup(function () {
+                var phoneValue = parseInt(jQuery(this).val()).toString(); // Bỏ số 0 ở đầu
                 if (isPhoneNumber(phoneValue) && !sentPhoneList[phoneValue]) {
                     phone = phoneValue;
-                    createPhone($(this).val());
+                    createPhone(jQuery(this).val());
                 }
             });
-            $('input[name="'+_opt.name_name+'"]').change(function () {
-                name = $(this).val();
+            jQuery('input[name="'+_opt.name_name+'"]').change(function () {
+                name = jQuery(this).val();
                 if(phone) {
                     updateName(name, phone);
                 }
             })
-            $('.'+_opt.submit_class).click(function () {
+            jQuery('.'+_opt.submit_class).click(function () {
                 if(phone) {
                     updateSubmit(phone);
                 }
@@ -311,37 +311,37 @@
             if($.trim(value) == 'proof'){
                 var currentNumber = Math.floor(Math.random() * (72 - 20 + 1)) + 20;
                 var places = ['Hà Nội', 'Nghệ An', 'Hồ Chí Minh', 'Vũng Tàu', 'Nha Trang', 'Cà Mau', 'Hà Giang', 'Hải Phòng', 'Quảng Ninh', 'Thanh Hóa', 'Ninh Bình'];
-                var proofWrapper = $('<div id="scpf" style="transition:all 2s ease 0s;position:fixed;z-index:99999;border-radius:30px;bottom:5px;left:20px;width:300px;height:65px;background-color:white"></div>');
-                var proofLeft = $('<div style="position:absolute;float:left;width:65px;height:65px;"></div>');
-                var proofRight = $('<div style="position:relative;float:left;margin-left:75px;margin-top:15px;width:200px;"></div>');
+                var proofWrapper = jQuery('<div id="scpf" style="transition:all 2s ease 0s;position:fixed;z-index:99999;border-radius:30px;bottom:5px;left:20px;width:300px;height:65px;background-color:white"></div>');
+                var proofLeft = jQuery('<div style="position:absolute;float:left;width:65px;height:65px;"></div>');
+                var proofRight = jQuery('<div style="position:relative;float:left;margin-left:75px;margin-top:15px;width:200px;"></div>');
 
                 function proof() {
-                    var halogen = $('<img style="width:100%" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif"></img>')
-                    var text = $('<p id="proofcontent" style="color:#000;">Có <span id="people" style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + currentNumber +' khách truy cập</span> đang xem trang.</p>')
-                    $(proofLeft).append(halogen);
-                    $(proofRight).append(text);
-                    $(proofWrapper).append(proofLeft);
-                    $(proofWrapper).append(proofRight);
+                    var halogen = jQuery('<img style="width:100%" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif"></img>')
+                    var text = jQuery('<p id="proofcontent" style="color:#000;">Có <span id="people" style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + currentNumber +' khách truy cập</span> đang xem trang.</p>')
+                    jQuery(proofLeft).append(halogen);
+                    jQuery(proofRight).append(text);
+                    jQuery(proofWrapper).append(proofLeft);
+                    jQuery(proofWrapper).append(proofRight);
 
-                    $('body').append(proofWrapper);
+                    jQuery('body').append(proofWrapper);
 
                     function loopThis() {
                         var delay = Math.floor(Math.random() * (20000 - 15000 + 1)) + 15000;
                         
                         setTimeout(function() {
                             var place = places[Math.floor(Math.random()*places.length)];
-                            $('#proofcontent').html('Một khách hàng từ <span style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + place + '</span> vừa đặt hàng thành công!');
-                            $('#scpf').css("bottom", "5px");
+                            jQuery('#proofcontent').html('Một khách hàng từ <span style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + place + '</span> vừa đặt hàng thành công!');
+                            jQuery('#scpf').css("bottom", "5px");
                             
                             setTimeout(function() {
-                                $(proofRight).fadeOut("slow", function() {
+                                jQuery(proofRight).fadeOut("slow", function() {
                                     currentNumber = currentNumber + (Math.floor(Math.random() * (5 - 1 + 1)) + 1) * (Math.random() > 0.3 ? 1 : -1); 
 
-                                    $('#proofcontent').html('<p id="proofcontent" style="color:#000;"><span id="people" style="color:#F44336;background-color:#FFEBEE">' + currentNumber +' người</span> đang xem trang</p>')
+                                    jQuery('#proofcontent').html('<p id="proofcontent" style="color:#000;"><span id="people" style="color:#F44336;background-color:#FFEBEE">' + currentNumber +' người</span> đang xem trang</p>')
                         
-                                    $(proofRight).fadeIn("slow", function() {
+                                    jQuery(proofRight).fadeIn("slow", function() {
                                         setTimeout(function() {
-                                            $('#scpf').css('bottom', '-80px');
+                                            jQuery('#scpf').css('bottom', '-80px');
                                         }, 3000);
                                         loopThis();
                                     });
@@ -353,7 +353,7 @@
                     }
 
                     setTimeout(function() {
-                        $('#scpf').css("bottom", "-80px");
+                        jQuery('#scpf').css("bottom", "-80px");
                         loopThis();
                     }, 3000);
                 }
@@ -363,18 +363,18 @@
 
             if($.trim(value) == 'popup'){
                 setTimeout(function () {
-                    $(_opt.popup_wrap).fadeIn(600);
+                    jQuery(_opt.popup_wrap).fadeIn(600);
                 }, _opt.popup_time);
 
-                $('#closepopup').click(function (e) {
+                jQuery('#closepopup').click(function (e) {
                     e.preventDefault();
-                    $(_opt.popup_wrap).fadeOut(200);
+                    jQuery(_opt.popup_wrap).fadeOut(200);
                 });
 
-                $('html').click(function (e) {
+                jQuery('html').click(function (e) {
                     var a = e.target;
-                    if ($(a).parents(_opt.popup_wrap).length === 0) {
-                        $(_opt.popup_wrap).fadeOut(600);
+                    if (jQuery(a).parents(_opt.popup_wrap).length === 0) {
+                        jQuery(_opt.popup_wrap).fadeOut(600);
                     }
                 });    
             }
@@ -386,37 +386,37 @@
         if (getParam('proof') == 1) {
             var currentNumber = Math.floor(Math.random() * (72 - 20 + 1)) + 20;
             var places = ['Hà Nội', 'Nghệ An', 'Hồ Chí Minh', 'Vũng Tàu', 'Nha Trang', 'Cà Mau', 'Hà Giang', 'Hải Phòng', 'Quảng Ninh', 'Thanh Hóa', 'Ninh Bình'];
-            var proofWrapper = $('<div id="scpf" style="transition:all 2s ease 0s;position:fixed;z-index:99999;border-radius:30px;bottom:5px;left:20px;width:300px;height:65px;background-color:white"></div>');
-            var proofLeft = $('<div style="position:absolute;float:left;width:65px;height:65px;"></div>');
-            var proofRight = $('<div style="position:relative;float:left;margin-left:75px;margin-top:15px;width:200px;"></div>');
+            var proofWrapper = jQuery('<div id="scpf" style="transition:all 2s ease 0s;position:fixed;z-index:99999;border-radius:30px;bottom:5px;left:20px;width:300px;height:65px;background-color:white"></div>');
+            var proofLeft = jQuery('<div style="position:absolute;float:left;width:65px;height:65px;"></div>');
+            var proofRight = jQuery('<div style="position:relative;float:left;margin-left:75px;margin-top:15px;width:200px;"></div>');
 
             function proof() {
-                var halogen = $('<img style="width:100%" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif"></img>')
-                var text = $('<p id="proofcontent" style="color:#000;">Có <span id="people" style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + currentNumber +' khách truy cập</span> đang xem trang.</p>')
-                $(proofLeft).append(halogen);
-                $(proofRight).append(text);
-                $(proofWrapper).append(proofLeft);
-                $(proofWrapper).append(proofRight);
+                var halogen = jQuery('<img style="width:100%" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif"></img>')
+                var text = jQuery('<p id="proofcontent" style="color:#000;">Có <span id="people" style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + currentNumber +' khách truy cập</span> đang xem trang.</p>')
+                jQuery(proofLeft).append(halogen);
+                jQuery(proofRight).append(text);
+                jQuery(proofWrapper).append(proofLeft);
+                jQuery(proofWrapper).append(proofRight);
 
-                $('body').append(proofWrapper);
+                jQuery('body').append(proofWrapper);
 
                 function loopThis() {
                     var delay = Math.floor(Math.random() * (20000 - 15000 + 1)) + 15000;
                     
                     setTimeout(function() {
                         var place = places[Math.floor(Math.random()*places.length)];
-                        $('#proofcontent').html('Một khách hàng từ <span style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + place + '</span> vừa đặt hàng thành công!');
-                        $('#scpf').css("bottom", "5px");
+                        jQuery('#proofcontent').html('Một khách hàng từ <span style="color:#F44336;background-color:#FFEBEE;padding:1px 5px;">' + place + '</span> vừa đặt hàng thành công!');
+                        jQuery('#scpf').css("bottom", "5px");
                         
                         setTimeout(function() {
-                            $(proofRight).fadeOut("slow", function() {
+                            jQuery(proofRight).fadeOut("slow", function() {
                                 currentNumber = currentNumber + (Math.floor(Math.random() * (5 - 1 + 1)) + 1) * (Math.random() > 0.3 ? 1 : -1); 
 
-                                $('#proofcontent').html('<p id="proofcontent" style="color:#000;"><span id="people" style="color:#F44336;background-color:#FFEBEE">' + currentNumber +' người</span> đang xem trang</p>')
+                                jQuery('#proofcontent').html('<p id="proofcontent" style="color:#000;"><span id="people" style="color:#F44336;background-color:#FFEBEE">' + currentNumber +' người</span> đang xem trang</p>')
                     
-                                $(proofRight).fadeIn("slow", function() {
+                                jQuery(proofRight).fadeIn("slow", function() {
                                     setTimeout(function() {
-                                        $('#scpf').css('bottom', '-80px');
+                                        jQuery('#scpf').css('bottom', '-80px');
                                     }, 3000);
                                     loopThis();
                                 });
@@ -428,7 +428,7 @@
                 }
 
                 setTimeout(function() {
-                    $('#scpf').css("bottom", "-80px");
+                    jQuery('#scpf').css("bottom", "-80px");
                     loopThis();
                 }, 3000);
             }
@@ -449,11 +449,11 @@
             valName();
             valPopup();
 
-            $("body").on('touchend, click', function(){
-                $('.'+_opt.error_class).remove();
+            jQuery("body").on('touchend, click', function(){
+                jQuery('.'+_opt.error_class).remove();
             });
 
-            $('.'+_opt.submit_class).click(function(e){
+            jQuery('.'+_opt.submit_class).click(function(e){
                 //e.preventDefault();
                 checkForm(this);
                 return false;
